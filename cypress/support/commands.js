@@ -29,8 +29,8 @@ Cypress.Commands.add('getToken', () => {
     method: 'POST',
     url: '/api/auth/login',
     body: {
-      email: 'ihor@email.com',
-      password: 'qwerty321',
+      email: Cypress.env('email'),
+      password: Cypress.env('password'),
     },
   }).then((response) => {
     return response.body.token;

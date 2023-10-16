@@ -1,5 +1,4 @@
 node_modules/
-cypress/1-getting-started/
-cypress/2-advanced-examples/
-/cypress/screenshots/
-/cypress/videos/
+screenshots/
+videos/
+/cypress.env.json
