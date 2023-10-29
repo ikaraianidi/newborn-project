@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "cypress": "^13.3.0"
+  },
+  "dependencies": {
+    "cypress-mongodb": "^6.2.0"
   }
 }

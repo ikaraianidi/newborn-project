@@ -39,11 +39,15 @@ Cypress.Commands.add('getToken', () => {
 
 Cypress.Commands.add('loginViaApi', () => {
   cy.getToken().then((token) => {
+    cy.intercept('GET', '/api/analytics/overview').as('analyticsOverview');
     cy.visit('/overview', {
       onBeforeLoad(win) {
         win.localStorage.setItem('auth-token', token);
       },
     });
+    cy.wait('@analyticsOverview', { timeout: 7000 })
+      .its('response.statusCode')
+      .should('be.oneOf', [200, 304]);
   });
 });
 
@@ -62,3 +66,23 @@ Cypress.Commands.add('getCategories', () => {
       });
   });
 });
+
+Cypress.Commands.add(
+  'createPosition',
+  (categoryId, positionName, positionCost) => {
+    cy.getToken().then((token) => {
+      cy.request({
+        method: 'POST',
+        url: '/api/position',
+        body: {
+          category: categoryId,
+          name: positionName,
+          cost: positionCost,
+        },
+        headers: {
+          Authorization: token,
+        },
+      });
+    });
+  }
+);
